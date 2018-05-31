@@ -18,10 +18,9 @@ ProcessedDirectory (D:\analysis\data\processed\~)
 6. X_unannotated.bc: bcolz file (shuffled) containing all of the unannotated image sections; shape (num_positive_cells - num_test_set - num_train, 32, 32, 2)
 
 ResultDirectory (D:\analysis\results\~)
+
 2. cell_centers_all.npy: array of every cell center, shuffled;  shape (num_positive_cells, 3)
-
 3. cell_centers_test.npy: array of test cell centers, shuffled; shape (num_test_set, 3)
-
 4. cell_centers_annotated.npy: array of annotated cell centers, shuffled; shape (num_train, 3)
 
 5. cell_centers_unannotated.npy: array of remaining unannotated cell centers; shape (num_positive_cells - num_train - num_test, 3)
