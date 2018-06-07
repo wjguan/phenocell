@@ -1,5 +1,4 @@
 import bcolz, os, time,sys
-sys.path.append(r'D:\analysis')
 import numpy as np
 from sklearn.model_selection import train_test_split
 
@@ -21,10 +20,8 @@ from keras.layers.convolutional import *
 from keras.layers.merge import concatenate 
 from keras.layers.pooling import GlobalAveragePooling2D
 
-sys.path.append(r'D:\analysis\clarity\Models')
 from metrics import * 
 from objectives import * 
-
 from imblearn.over_sampling import SMOTE # in case we have a class imbalance
 
 
