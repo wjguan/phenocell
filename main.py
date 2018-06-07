@@ -1,5 +1,7 @@
 import sys
 sys.path.append(r'phenotyping')
+sys.path.append(r'clarity')
+sys.path.append(r'clarity\Models')
 from activelearning import phenotype
 import os, time 
 
@@ -15,7 +17,7 @@ def main():
     num_test_set = 500 # number of elements in a test set used to validate
     initial_num_labeling = 1000
     num_candidates = 1000 # first pass: number of most uncertain samples to choose from 
-    max_training_examples = 4500 # if none, then set max training examples to be all training examples    
+    max_training_examples = None # if none, then set max training examples to be all training examples    
     random_fraction = 0.5 # the fraction of the total annotation suggestions that should be randomly selected (only use if doing random_uncertain method)
     num_annotation_suggestions = num_candidates # keep it equal to num_candidates to not use representativeness as metric
     
