@@ -37,6 +37,8 @@ def phenotype(num_test_set, initial_num_labeling, num_candidates, num_annotation
     useSMOTE = True # whether we use SMOTE to oversample the imbalanced class 
     use_class_weights = False # true if we want to use weighted cross entropy 
     categorical = True # true if we are doing softmax
+    num_context_slices = 1
+    num_workers = None 
     saveDirectory = os.path.join(ResultDirectory, r"y_current_annotation.npy")# Directory in which we save the currently annotated stuff
     ## End parameters 
     
@@ -189,7 +191,7 @@ def phenotype(num_test_set, initial_num_labeling, num_candidates, num_annotation
             num_uncertain = num_annotation_suggestions - num_random 
             X_new_annotation = X_shuffled[num_test_set+num_labeled_imgs:num_test_set+num_labeled_imgs+num_random]
             X_unannotated = X_shuffled[num_test_set+num_labeled_imgs+num_random:]
-            X_new_annotation_uncert, X_unannotated_new, annotation_indices_uncert = annotationSuggestion(y_pred, categorical, num_candidates, X_unannotated, num_uncertain, num_workers)
+            X_new_annotation_uncert, X_unannotated_new, annotation_indices_uncert = annotationSuggestion(y_pred[num_random:], categorical, num_uncertain, X_unannotated)
             X_new_annotation = np.concatenate((X_new_annotation, X_new_annotation_uncert), axis=0)
             annotation_indices = np.concatenate((np.arange(num_random), annotation_indices_uncert + num_random), axis=0)
         elif queryType != 'random': # use active learning, not random querying 
@@ -296,7 +298,8 @@ def train_and_predict(BOUND_SIZE, model_type, X, y, ModelName, batch_size, max_e
                       X_unannotated=None, num_context_slices=1, useSMOTE=True, use_class_weights=False, loadModel=True, callback=True):
     ''' Trains a model and predicts unannotated samples for next iteration of active learning.'''
     #X_train, X_val, y_train, y_val = train_test_split(X,y,test_size=0.1,random_state=21)
-    X_t = normalize(X); y_train = y
+    X_t = normalize(X)
+    y_train = y
     if use_class_weights:
         class_weights = class_weight.compute_class_weight('balanced',[0,1],y_train)
     else:
